@@ -72,3 +72,220 @@
 {
     display: none;
 }
+.val_error
+{
+    color:red;
+}
+
+
+/* ================================ */
+
+
+.bg-modal
+{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color:rgba(0, 0, 0, 0.094);
+    justify-content: center;
+    align-items: center;
+    display: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+#card_display
+{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    background-color:rgba(79, 78, 78, 0.589);
+    align-items: center;
+    display: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+#card_display2
+{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    background-color:rgba(79, 78, 78, 0.589);
+    align-items: center;
+    display: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+#card_pop
+{
+    padding-bottom: 20px;
+    background-color: white;
+    width: 40%;
+    border-radius:5%;
+    border: 2px solid black;
+}
+#edit_pop
+{
+    padding-bottom: 20px;
+    background-color: white;
+    width: 40%;
+    border-radius:5%;
+    border: 2px solid black;
+}
+
+
+.model-content
+{
+    padding-bottom: 20px;
+    background-color: white;
+    width: 30%;
+}
+.form-control
+{
+margin: 1rem;
+}
+.input_modify
+{
+    width: 100%;
+    display: block;
+    margin: auto;
+    height:35px;
+
+}
+.input_modify1
+{
+    height: 40px;
+}
+.input_modify:hover,.input_modify1:hover
+{
+    box-shadow: 6px 6px 10px rgba(172, 169, 169, 0.562);
+}
+.header
+{
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+}
+#close_button
+{
+    width: 40px;
+    height: 40px;
+    font-size: 25px;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   color: red;
+   border-radius: 50%;
+}
+#close_button:hover
+{
+    box-shadow: 5px 5px 10px rgba(218, 128, 128, 0.719);
+}
+#image
+{
+    display: block;
+    margin: auto;
+    height: 130px;
+    width: 110px;
+    margin-top:30px;
+    box-shadow: 3px 3px 3px black;
+}
+#image:hover
+{
+    transform: scale(1.2);
+}
+#emp_name
+{
+    display: flex;
+    justify-content: center;
+    color: brown;
+}
+#loc
+{
+    display: flex;
+    justify-content: center;
+    color: rgba(240, 76, 117, 0.954);
+}
+.details
+{
+    line-height: 1rem;
+    color: rgb(74, 74, 214);
+}
+#button1
+{
+    background-color: rgb(240, 4, 4);
+    border: 1px solid white;
+    color: aliceblue;
+    font-size: 1.5rem;
+}
+#button2
+{
+    background-color:rgb(76, 76, 255);
+    border: 1px solid white;
+    color: aliceblue;
+    font-size: 1.5rem;
+}
+#button2:hover,#button1:hover
+{
+    box-shadow: 10px 10px 10px rgba(64, 61, 61, 0.719);
+}
+.buttons
+{
+    display: flex;
+    justify-content: space-around;
+}
+#loc:hover
+{
+    transform:scale(1.5);
+}
+.card:hover
+{
+    transform: scale(1.05);
+    box-shadow: 3px 3px 3px black;
+}
+#button3
+{
+    background-color: rgb(87, 225, 83);
+    color: aliceblue;
+    font-size: 1.4rem;
+}
+.tabled
+{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+#input_edit1,#input_edit2,#input_edit3,#input_edit4,#input_edit5,#input_edit6
+{
+    border: none;
+    color: rgb(16, 16, 248);
+    display:inline-flexbox;
+}
+#input_edit1:hover,#input_edit2:hover,#input_edit3:hover,#input_edit4:hover,#input_edit5:hover,#input_edit6:hover
+{
+    transform: scale(1.05);
+}
+#popup_close
+{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    font-size: 2.5rem;
+    margin-right: auto;    
+}
+.popup_close_div
+{
+    display: flex;
+    justify-content: end;
+    height: 3rem;
+}
