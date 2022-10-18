@@ -17,39 +17,41 @@
 <body>
     <nav class="container mb-4">
         <div class="row ">
-            <div class="col-lg-2 p-0"><img src="images/saketa.png"></div>
+            <div class="col-lg-2 p-0 d-flex justify-content-center"><img src="images/saketa.png"></div>
             <div class=" col-lg-3 align-self-end">
                 <h2 class="info" id="color">Employee Directory</h2>
-                <h6>The ultimate people Directory Experience</h6>
+                <h6 style="white-space: nowrap;">The ultimate people Directory Experience</h6>
             </div>
             <div class="col justify-content-end d-flex">
                 <h3 class="align-self-end me-3"><span id="color">Welcome</span>, Andrew Philips</h3>
                 <img src="images/face.png" class="align-self-end">
             </div>
         </div>
-        <hr style="width:98%; margin: auto;">
+        <hr style="width:100%; margin: auto;">
     </nav>
-    <div id="alert"></div>
+
+
     <div class="container">
         <div class="row">
-            <div class="col-2 p-0">
-                <div class="row-cols-1">
-                    <div class="col" id="filter1">
-
+            <div class="col-xl-2  col-xs-12 order-last order-xl-first p-0 mb-5">
+                <div class="row row-cols-1 row-cols-sm-3 row-cols-xl-1 ms-2 mb-4">
+                    <div class="col " id="filter1">
                         <!-- CODE BY JS -->
                     </div>
                     <div class="col" id="filter2">
                         <!-- CODE BY JS -->
                     </div>
-                    <div class="col" id="filter3">
-                        <!-- Code by JS -->
-                    </div>
-                    <div class="col" id="filter4">
-                        <!-- Code by JS -->
+                    <div class="col">
+                        <div class="col" id="filter3">
+                            <!-- Code by JS -->
+                        </div>
+                        <div class="col" id="filter4">
+                            <!-- Code by JS -->
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-10">
+            <div class="col-xs-12  col-xl-10 ">
                 <div class="container">
                     <div class="row-cols-1">
                         <div class="col mb-4">
@@ -63,7 +65,8 @@
                             <button id="alphabet" onclick="display('B')">B</button><button id="alphabet"
                                 onclick="display('C')">C</button>
                             <button id="alphabet" onclick="display('D')">D</button><button id="alphabet"
-                                onclick="display('E')">E</button><button id="alphabet" onclick="display('F')">F</button>
+                                onclick="display('E')">E</button>
+                            <button id="alphabet" onclick="display('F')">F</button>
                             <button id="alphabet" onclick="display('G')">G</button><button id="alphabet"
                                 onclick="display('H')">H</button><button id="alphabet" onclick="display('I')">I</button>
                             <button id="alphabet" onclick="display('J')">J</button><button id="alphabet"
@@ -76,32 +79,34 @@
                                 onclick="display('T')">T</button><button id="alphabet" onclick="display('U')">U</button>
                             <button id="alphabet" onclick="display('V')">V</button><button id="alphabet"
                                 onclick="display('W')">W</button><button id="alphabet" onclick="display('X')">X</button>
-                            <button id="alphabet" onclick="display('Y')">Y</button><button id="alphabet" 
+                            <button id="alphabet" onclick="display('Y')">Y</button><button id="alphabet"
                                 onclick="display('Z')">Z</button>
                         </div>
                         <div class="col mb-1">
-                            <div class="row ">
-                                <div class="col-10 d-flex">
-                                    <h6 class="align-self-end"><a 
-                                            class=" text-secondary text-decoration-none"></i> Search</a></h6>
-                                    <input type="text" class="form ms-2" placeholder="Enter any keyword" id="search">
-                                    <button class="buton me-5" id="clear">CLEAR</button>
-                                    <h6 class="align-self-end"><i class="bi bi-funnel-fill"></i>Filter by:</h6>
-                                    <select class="form-select ms-3" id="select_option" onchange="onchange_filter()">
-                                        <option selected value="Preferred_Name">Preferred Name</option>
-                                        <option value="First_Name">First Name</option>
-                                        <option value="Last_Name">Last Name</option>
-                                    </select>
+                            <div class="row d-flex">
+                                <div class="col-sm-12 col-lg-10 d-md-flex mb-3 justify-content-between">
+                                    <div class="d-flex mb-3 ">
+                                        <h6 class="align-self-end">Search</h6>
+                                        <input type="text" class="form ms-2" placeholder="Enter any keyword" id="search">
+                                        <button class="buton" id="clear">CLEAR</button>
+                                    </div>
+                                    <div id="filterBy_Select" class="d-flex mb-2 ">
+                                        <h6 id="filter_by" style="white-space: nowrap;"><i class="bi bi-funnel-fill"></i>Filter by:</h6>
+                                        <select class="form-select ms-3" id="select_option" onchange="onchange_filter()">
+                                            <option selected value="Preferred_Name">Preferred Name</option>
+                                            <option value="First_Name">First Name</option>
+                                            <option value="Last_Name">Last Name</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-2 order-last">
+                                <div class="col-sm-12 col-lg-2  mb-2 ">
                                     <button type="button" id="add_employee" class="btn">Add Employee</button>
-                                    <!-- ============ -->
                                 </div>
                             </div>
                         </div>
                         <p>Note: Please use advance filter option to refine your results</p>
                         <div class="col p-3 " id="display_res">
-                            <div class="row row-cols-4 " id="row_display">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4" id="row_display">
                                 <!-- code by javascript -->
                             </div>
 
@@ -114,51 +119,40 @@
     <div class="bg-modal" id="bg_modal">
         <div class="model-content form-control p-3">
             <header class="header p-4">
-                <h4 style="display:flex;">ENTER EMPLOYEE DETAILS</h4>
+                <h4 style="display:flex;">ENTER DETAILS</h4>
                 <button id="close_button"><b>X</b></button>
             </header>
             <form id="form" class="ps-2">
                 <div>
-                    <input type="text" class="input_modify1" style="width:49%;" placeholder="First Name" id="input_fname" required>
-                    <input type="text" class="input_modify1" style="width:49%;" placeholder="Last Name" id="input_lname" required>
-                    <div id="hidden1" style="color:red;display:none;">Please fill out this field!!</div>
-                    <div id="hid2" style="color:red;display:none;">Please fill out the field correctly</div>
-
+                    <input type="text" class="input_modify1" style="width:49%;" placeholder="First Name"
+                        id="input_fname" required>
+                    <input type="text" class="input_modify1" style="width:49%;" placeholder="Last Name" id="input_lname"
+                        required>
+                    <div id="hidden1" style="color:red;display:none;">Please fill out this field correctly!!</div>
                 </div>
                 <div class="mb-3">
                     <label><b>Preffered Name</b></label>
-                    <input type="text" class="input_modify" id="input_pname" required>
-                    <div id="hidden2" style="color:red;display:none;">Please fill out this field!!</div>
+                    <input type="text" class="input_modify" id="input_pname" value="a"required>
+                    <div id="hidden2" style="color:red;display:none;">Please fill out this field correctly!!</div>
                 </div>
                 <div>
                     <label><b>Email address</b></label>
-                    <input type="email" id="input_email" class="input_modify" required>
-                    <div id="hidden3" style="color:red;display:none;">Please fill out this field!!</div>
+                    <input type="email" id="input_email" class="input_modify" value="a@a.com" required>
+                    <div id="hidden3" style="color:red;display:none;">Please fill out this field correctly!!</div>
                 </div>
                 <div class="mb-3">
                     <label><b>Skype</b></label>
-                    <input type="email" id="input_skype" class="input_modify" required>
-                    <div id="hidden4" style="color:red;display:none;">Please fill out this field!!</div>
+                    <input type="email" id="input_skype" class="input_modify" value="a@a.com" required>
+                    <div id="hidden4" style="color:red;display:none;">Please fill out this field correctly!!</div>
                 </div>
                 <div class="mb-3">
                     <label><b>Phone Number</b></label>
-                    <input type="number" id="input_no" class="input_modify" required>
+                    <input type="number" id="input_no" class="input_modify" value="1234567890"required>
                     <div id="hidden5" style="color:red;display:none;">Invalid Phone Number!!</div>
                 </div>
                 <div class="mb-3">
                     <label><b>Job Title</b></label>
-                    <input type="text" id="input_job_title" class="input_modify" required>
-                        <!-- <option>Sharepoint practice head</option>
-                        <option>Operations manager</option>
-                        <option>Product manager</option>
-                        <option>BI Developer</option>
-                        <option>Network Engineer</option>
-                        <option>Talent Magnet Jr.</option>
-                        <option>Software Engineer</option>
-                        <option>UI Designer</option>
-                        <option>Lead-engineer-Dot Net</option>
-                        <option>Recruting Expert</option> -->
-                    </input>
+                    <input type="text" id="input_job_title" class="input_modify"  value="intern" required></input>
                     <div id="hidden6" style="color:red;display:none;">Please fill out this field!!</div>
                 </div>
                 <div class="mb-3">
@@ -177,6 +171,10 @@
                     <input type="radio" id="radioip" name="radio" value="seattle">
                     <label>Seattle</label>
                 </div>
+                <div>
+                    <b>Select Image: </b> <input type="file" id="img_selected" accept="images/*">
+                    <div id="hidden7" style="color:red;display:none;">Please select Image!!</div>
+                </div>
             </form>
             <footer class="d-flex justify-content-end me-3 ">
                 <button id="emp_button" type="submit" class="btn btn-success">Add Employee</button>
@@ -184,11 +182,13 @@
         </div>
     </div>
     <div id="card_display">
-        <div id="card_pop"></div>
+        <div id="card_pop">
+            <!-- code by js -->
+        </div>
     </div>
     <div id="card_display2">
         <div id="edit_pop">
-            <h1>hello world!!</h1>
+            <!-- code by js -->
         </div>
     </div>
 </body>
