@@ -1,3 +1,4 @@
+
 let data = {
   employees: [
     {
@@ -115,10 +116,29 @@ const button_obj = document.getElementById("emp_button");
 const myModal=document.getElementById('EmployeeModal');
 const add_emp_popup=document.getElementById('add_employee');
 
-let count=1;
+let data1;
+if(!sessionStorage.new_obj)
+{
+  sessionStorage.setItem("new_obj",JSON.stringify(data));
+  data1=JSON.parse(sessionStorage.new_obj);
+}
+else
+{
+ data1=JSON.parse(sessionStorage.new_obj);
+}
+
+let count;
+if(sessionStorage.count)
+{
+  count=JSON.parse(sessionStorage.count);
+}
+else
+{
+  sessionStorage.setItem("count",1);
+  count=JSON.parse(sessionStorage.count);
+}
 
 // ============================================= Event Listners ======================================
-
 
 //this works when clicked on add employee
 document.getElementById('add_employee').addEventListener('click',()=>{
@@ -127,7 +147,7 @@ document.getElementById('add_employee').addEventListener('click',()=>{
 //this works when clicked on cross button
 document.getElementById('close_button').addEventListener('click',()=>{
   document.getElementById('bg_modal').style.display='none';
-  clear_input();
+  clear_input();                  
 });
 
 //this works when new employe is added 
@@ -137,7 +157,6 @@ button_obj.addEventListener('click',()=>{
     add_new_emp();
     clear_input();
     document.getElementById('bg_modal').style.display='none';
-
   }
 });
 
@@ -153,24 +172,101 @@ searchby.addEventListener("keyup", () => {
     onchange_filter();
 });
 
-
-document.getElementById('input_fname').addEventListener('blur',()=>{
-  let regex=/^[A-Z]/;
-  console.log(regex.test(document.getElementById('input_fname').value));
-});
-
 // ======================================================= Functions ==================================================
+
+//this checks the first name last name validation
+function valid_name()
+{
+  let first_name=document.getElementById('input_fname').value;
+  let last_name=document.getElementById('input_lname').value;
+  const regex=/^\w{1,10}$/;
+  if(regex.test(first_name)&&regex.test(last_name))
+  {
+    document.getElementById('hidden1').style.display='none';
+    return true;
+  }
+  else
+  {
+    document.getElementById('hidden1').style.display='block';
+    return false;
+  }
+}
+
+//this function checks validity of phone number
+function valid_phoneNo()
+{
+  let entered_no=document.getElementById('input_no').value;
+  const regex=/^[1-9][0-9]{9}$/;
+  if(!regex.test(entered_no))
+  {
+    document.getElementById('hidden5').style.display='flex';
+    return false;
+  }
+  else 
+  {
+    document.getElementById('hidden5').style.display='none';
+    return true;
+  }
+}
+
+//this fun checks validity of email
+function valid_email(num)
+{
+  const regex=/^\w+([\._-]?\w+)*@\w+.com$/;
+  const mail=(num==3)?"input_email":"input_skype";
+  let entered_email=document.getElementById(mail).value;
+  const id="hidden"+num;
+  if(!regex.test(entered_email))
+  {
+    document.getElementById(id).style.display='block';
+    return false;
+  }
+  else 
+  {
+    document.getElementById(id).style.display='none';
+    return true;
+  }
+}
+
+//this fun checks validity of job Title
+function valid_jobTitle()
+{
+  const regex=/^(\w+)+(\s\w+)*$/;
+  let entered_job=document.getElementById('input_job_title').value;
+  if(!regex.test(entered_job))
+  {
+    document.getElementById('hidden6').style.display='block';
+    return false;
+  }
+  else 
+  {
+    document.getElementById('hidden6').style.display='none';
+    return true;
+  }
+}
+
+//this fun checks validity of image
+function valid_img()
+{
+  if(document.getElementById('img_selected').value)
+  {
+    document.getElementById('hidden7').style.display='none';
+    return true;
+  }
+  else
+  {
+    document.getElementById('hidden7').style.display='block';
+    return false;
+  }
+}
 
 //this function tigger when the filter by value changes 
 function onchange_filter()
 {
   let arr = [];
-    for (let i = 0; i < data["employees"].length; i++) {
-      arr.push(data["employees"][i][filterby.value].toUpperCase());
-    }
+    data["employees"].forEach(x=>arr.push(x[filterby.value].toUpperCase()));
     check_string(searchby.value.toUpperCase(),arr);
 }
-
 
 //this closes edit emplouee popup
 function close_edit_popup()
@@ -188,43 +284,7 @@ function close_emp_popup()
 //checks the entered values in fields
 function check_validation()
 {
- 
-  if(document.getElementById('input_fname').value===""||document.getElementById('input_lname').value==="")
-  {
-    document.getElementById('hidden1').style.display="block";
-    return false;
-  }
-   if(document.getElementById('input_pname').value==="")
-  {
-    document.getElementById('hidden1').style.display="none";
-    document.getElementById('hidden2').style.display="block";
-    return false;
-  } 
-   if(document.getElementById('input_email').value==="")
-  {
-    document.getElementById('hidden1').style.display="none";
-    document.getElementById('hidden2').style.display="none";
-    document.getElementById('hidden3').style.display="block";
-    return false;
-  } 
-   if(document.getElementById('input_skype').value==="")
-  {
-    document.getElementById('hidden1').style.display="none";
-    document.getElementById('hidden2').style.display="none";
-    document.getElementById('hidden3').style.display="none";
-    document.getElementById('hidden4').style.display="block";
-    return false;
-  } 
-   if(document.getElementById('input_no').value===""||document.getElementById('input_no').value.length<10)
-  {
-    document.getElementById('hidden1').style.display="none";
-    document.getElementById('hidden2').style.display="none";
-    document.getElementById('hidden3').style.display="none";
-    document.getElementById('hidden4').style.display="none";
-    document.getElementById('hidden5').style.display="block";
-    return false;
-  } 
-  return true;
+  return valid_name()&&valid_email(3)&&valid_email(4)&&valid_phoneNo()&&valid_jobTitle()&&valid_img();
 }
 
 //This fuction clears the input form values
@@ -237,35 +297,58 @@ function clear_input()
   document.getElementById('input_skype').value="";
   document.getElementById('input_no').value="";
   document.getElementById('input_job_title').value="";
+  document.getElementById('img_selected').value="";
   document.getElementById('input_department').value="IT Department";
   document.getElementById('hidden1').style.display="none";
   document.getElementById('hidden2').style.display="none";
   document.getElementById('hidden3').style.display="none";
   document.getElementById('hidden4').style.display="none";
   document.getElementById('hidden5').style.display="none";
+  document.getElementById('hidden6').style.display="none";
+  document.getElementById('hidden7').style.display="none";
 }
 
 //This adds new employee to array
+const img_arr=[];
+const file_ip=document.getElementById('img_selected');
+file_ip.addEventListener('change',function() {
+  const reader=new FileReader();
+  reader.addEventListener('load',()=>{
+  if(sessionStorage.getItem('img'))
+  {
+    const array=JSON.parse(sessionStorage.getItem('img'));
+    array.push(reader.result);
+    sessionStorage.setItem('img',JSON.stringify(array));
+  }
+  else{
+    img_arr.push(reader.result);
+    sessionStorage.setItem('img',JSON.stringify(img_arr));
+  }
+  });
+reader.readAsDataURL(this.files[0]);
+});
 function add_new_emp() {
-  let emp_data = {
+  entered_job_title=document.getElementById("input_job_title").value.charAt(0).toUpperCase()+document.getElementById("input_job_title").value.substring(1,document.getElementById("input_job_title").value.length);
+  let emp_data1 = {
     Id:108+count,
     First_Name: document.getElementById("input_fname").value,
     Preferred_Name: document.getElementById("input_pname").value,
     email: document.getElementById("input_email").value,
-    job_title: document.getElementById("input_job_title").value,
+    job_title: entered_job_title,
     phone_no: document.getElementById("input_no").value,
     skype: document.getElementById("input_skype").value,
     Last_Name: document.getElementById("input_lname").value,
-    image: "images/employee.png",
+    image:JSON.parse(sessionStorage.getItem('img'))[JSON.parse(sessionStorage.getItem("count"))-1],
     department: document.getElementById("input_department").value,
     location:document.querySelector('input[name="radio"]:checked').value,
   };
-  count++;
-  data["employees"].push(emp_data);
+  sessionStorage.count=JSON.parse(sessionStorage.count)+1;
+  data1["employees"].push(emp_data1);
+  sessionStorage.new_obj=JSON.stringify(data1);
   display("");
 };
 
-// This function is used to serach entered input with preffered name 
+// This function is used to serach entered input with selected filter by 
 function check_string(substring,list)
 {
   let res="";
@@ -309,7 +392,7 @@ function filter_offices(){
   {
    result+=`
    <div class=" pb-2 ">
-       <button class="filters_button" onclick="specific('location','${user[0]}')"><h6>${user[0]+" ("+user[1]+")"}</h6></button>
+       <button class="filters_button" onclick="specific('location','${user[0]}')"><h6>${user[0].toUpperCase()+" ("+user[1]+")"}</h6></button>
    </div>
    `;
   }
@@ -320,7 +403,6 @@ function filter_offices(){
 
   document.getElementById("filter2").innerHTML = offices_display;
 }
-
 
 //Below is filter function of Job Titles
 let result1="";
@@ -333,18 +415,17 @@ function filter_job_title(){
   const map_object=counter("job_title");
   for(let user of map_object)
   {
-    
     if(temp<4)
     {
       temp++;
       result1+=`
-       <button class="filters_button" onclick="specific('job_title','${user[0]}')"><h6>${user[0]+" ("+user[1]+")"}</h6></button>
+       <button class="filters_button" onclick="specific('job_title','${user[0]}')"><h6 style="white-space:nowrap">${user[0]+" ("+user[1]+")"}</h6></button>
    `;
     }
     else
     {
       result2+=`
-      <button class="filters_button" onclick="specific('job_title','${user[0]}')"><h6>${user[0]+" ("+user[1]+")"}</h6></button>
+      <button class="filters_button" onclick="specific('job_title','${user[0]}')"><h6 style="white-space:nowrap">${user[0]+" ("+user[1]+")"}</h6></button>
       `; 
     }
   }
@@ -357,11 +438,9 @@ function filter_job_title(){
  document.getElementById("filter3").innerHTML = jobtitle_display;
 }
 
-
 // This function is used to enable view more option in filter
 function display_enable()
 {
-  console.log(result2);
   let jobtitle_display = `
   ${result2}
  `;
@@ -380,17 +459,17 @@ function display_disable()
 // This function is used to display cards in HTML Page
 function cards(i)
 {
-let res= `<div class="col d-flex mb-2" role="button">
-<div class="card" onclick="profile_display(${(data["employees"][i].Id)})" >
-    <div class="card-body  d-flex p-1">
-        <div ><img src="${data["employees"][i].image}"></div>
+let res= `<div class="col d-flex mb-2" role="button" >
+<div class="card" onclick="profile_display(${(data1["employees"][i].Id)})" >
+    <div class="card-body  d-flex p-1" >
+        <div ><img src="${data1["employees"][i].image}"></div>
         <div class="ms-1"><h6 class="m-0">${
-          data["employees"][i].First_Name +
+          data1["employees"][i].First_Name +
           " " +
-          data["employees"][i].Last_Name
+          data1["employees"][i].Last_Name
         }</h6>
-        <p class="m-0">${data["employees"][i].job_title}<br>${
-    data["employees"][i].department
+        <p class="m-0">${data1["employees"][i].job_title}<br>${
+    data1["employees"][i].department
   }
         </p><i class="bi bi-telephone-fill pe-2"></i><i class="bi bi-chat-left-dots-fill pe-2"></i><i class="bi bi-chat-fill pe-2">
         </i><i class="bi bi-star-fill pe-2"></i><i class="bi bi-heart-fill"></i></div>
@@ -410,13 +489,13 @@ function display(input) {
   searchby.value = null;
   if (input === "") {
     filterby.value = "Preferred_Name";
-    for (let i = 0; i < data["employees"].length; i++) {
+    for (let i = 0; i < data1["employees"].length; i++) {
       res += cards(i);
     }
    } 
   else {
-    for (let i = 0; i < data["employees"].length; i++) {
-      if (data["employees"][i][filterby.value].charAt(0).toUpperCase() === input) {
+    for (let i = 0; i < data1["employees"].length; i++) {
+      if (data1["employees"][i][filterby.value].charAt(0).toUpperCase() === input) {
         res += cards(i);
       }
     }
@@ -429,7 +508,7 @@ function profile_display(eid)
 {
   const index=eid%100-1;
   document.getElementById('card_display').style.display="flex";
-  let loc=data["employees"][index].location.toUpperCase();
+  let loc=data1["employees"][index].location.toUpperCase();
   let add="";
   if(loc==='SEATTLE')
   {
@@ -437,29 +516,28 @@ function profile_display(eid)
   }
   else add="https://www.bing.com/search?q=india&qs=n&form=QBRE&sp=-1&pq=indi&sc=10-4&sk=&cvid=FFFF1FA43A744731806BC07B23891863&ghsh=0&ghacc=0&ghpl=";
   let res=`
-    <img src="${data["employees"][index].image}" id="image">
-    <hr style="width:100%">
-    <div><h1 id="emp_name">${data["employees"][index].Preferred_Name}</h1></div>
-    <hr style="width:100%">
-    <div class="ps-2">
+    <img src="${data1["employees"][index].image}" id="image">
+    <hr style="width:100%;margin:8px">
+    <div><h2 id="emp_name">${data1["employees"][index].Preferred_Name}</h2></div>
+    <hr style="width:100%;margin:8px">
+    <div class="">
      <h3 style="text-decoration: underline;">Professional Summary </h3>
-     <div><h5>Current Position : ${data["employees"][index].job_title}</h5></div>
-     <div><h5>Department : ${data["employees"][index].department}</h5></div>
-     <br>
+     <div><h5>Current Position : ${data1["employees"][index].job_title}</h5></div>
+     <div><h5>Department : ${data1["employees"][index].department}</h5></div>
      <h3 style="text-decoration: underline;"><i class="bi bi-person-lines-fill"></i> Contact Details </h3>
-     <div class="d-flex"><h5>Email <i class="bi bi-envelope"></i> :</h5><h5 class="details"> &nbsp${data["employees"][index].email}</h5></div>
-     <div class="d-flex"><h5>Skype <i  class="bi bi-skype"></i> :</h5><h5 class="details">&nbsp ${data["employees"][index].skype}</h5></div>
-     <div class="d-flex"><h5>Phone No <i class="bi bi-telephone"></i> :</h5><h5 class="details">&nbsp ${data["employees"][index].phone_no}</h5></div>
-     <br>
-     <hr style="width:100%">
-     <a id="loc" href="${add}" target="blank"><h4><i class="bi bi-geo-alt"></i> ${loc}</h4></a>
+     <div class="d-flex"><h5>Email <i class="bi bi-envelope"></i> :</h5><h5 class="details"> &nbsp${data1["employees"][index].email}</h5></div>
+     <div class="d-flex"><h5>Skype <i  class="bi bi-skype"></i> :</h5><h5 class="details">&nbsp ${data1["employees"][index].skype}</h5></div>
+     <div class="d-flex"><h5>Phone No <i class="bi bi-telephone"></i> :</h5><h5 class="details">&nbsp ${data1["employees"][index].phone_no}</h5></div>
+     <hr style="width:100%;margin:8px">
+     <a id="loc" href="${add}" target="blank"><h4 class="mb-0"><i class="bi bi-geo-alt"></i> ${loc}</h4></a>
     </div>  
-    <hr style="width:100%">
+    <hr style="width:100%;margin:8px">
     <div class="buttons">
       <button class="btn" id="button1" onclick="edit_emp_popup(${index})">EDIT DETAILS</button>
       <button class="btn" id="button2" onclick="close_emp_popup()">CLOSE DETAILS</button>
     </div>
 `;
+  window.scroll({top: 0, left: 0, behavior: 'smooth' });
   document.getElementById('card_pop').innerHTML=res;
 }
 
@@ -471,25 +549,25 @@ function edit_emp_popup(index)
   document.getElementById('card_display').style.display="none";
   edit=edit.concat(`
   <div class="popup_close_div"><button type="button" id="popup_close" class="btn-close" onclick="close_edit_popup()"></button></div>
-  <img src="${data["employees"][index].image}" id="image">
-  <hr style="width:100%">
-  <div><h1 id="emp_name"><span>${data["employees"][index].Preferred_Name}<span></h1></div>
-  <hr style="width:100%">
+  <img src="${data1["employees"][index].image}" id="image">
+  <hr style="width:100%;margin:8px">
+  <div><h4 id="emp_name"><span>${data1["employees"][index].Preferred_Name}<span></h4></div>
+  <hr style="width:100%;margin:8px">
   <div class="tabled">
   <table >
-  <tbody>
-    <tr><td><h3>First Name </h3></td><td><h3>: <input type="text" id="input_edit1" onchange="display_button3()" value="${data["employees"][index].First_Name}"></h3></td></tr>
-    <tr><td><h3>Last Name </h3></td><td><h3>: <input type="text" id="input_edit2" onchange="display_button3()" value="${data["employees"][index].Last_Name}"></h3></td></tr>
-    <tr><td><h3>Preffered Name </h3></td><td><h3>: <input type="text" id="input_edit3" onchange="display_button3()" value="${data["employees"][index].Preferred_Name}"></h3></td></tr>
-    <tr><td><h3>Email id </h3></td><td><h3>: <input type="email" id="input_edit4" onchange="display_button3()" value="${data["employees"][index].email}"></h3></td></tr>
-    <tr><td><h3>Skype id </h3></td><td><h3>: <input type="email" id="input_edit5" onchange="display_button3()" value="${data["employees"][index].skype}"></h3></td></tr>
-    <tr><td><h3>Phone No </h3></td><td><h3>: <input type="number" id="input_edit6" onchange="display_button3()" value="${data["employees"][index].phone_no}"></h3></td></tr>
-    <tr><td><h3>Job Title</h3></td><td><h3>: <input type="text" id="input_edit7" onchange="display_button3()" value="${data["employees"][index].job_title}"></h3></td></tr>
-    <tr><td><h3>Department</h3></td><td><h3>: <input type="text" id="input_edit8" onchange="display_button3()" value="${data["employees"][index].department}"></h3></td></tr>
+  <tbody class>
+    <tr><td><h5>First Name </h5></td><td><h6 style="white-space:nowrap">: <input type="text" id="input_edit1" onchange="display_button3()" value="${data1["employees"][index].First_Name}"></h6></td></tr>
+    <tr><td><h5>Last Name </h5></td><td><h6>: <input type="text" id="input_edit2" onchange="display_button3()" value="${data1["employees"][index].Last_Name}"></h6></td></tr>
+    <tr><td><h5 style="white-space:nowrap">Preffered Name </h5></td><td><h6>: <input type="text" id="input_edit3" onchange="display_button3()" value="${data1["employees"][index].Preferred_Name}"></h6></td></tr>
+    <tr><td><h5>Email id </h5></td><td><h6>: <input type="email" id="input_edit4" onchange="display_button3()" value="${data1["employees"][index].email}"></h6></td></tr>
+    <tr><td><h5>Skype id </h5></td><td><h6>: <input type="email" id="input_edit5" onchange="display_button3()" value="${data1["employees"][index].skype}"></h6></td></tr>
+    <tr><td><h5>Phone No </h5></td><td><h6>: <input type="number" id="input_edit6" onchange="display_button3()" value="${data1["employees"][index].phone_no}"></h6></td></tr>
+    <tr><td><h5>Job Title</h5></td><td><h6>: <input type="text" id="input_edit7" onchange="display_button3()" value="${data1["employees"][index].job_title}"></h6></td></tr>
+    <tr><td><h5>Department</h5></td><td><h6>: <input type="text" id="input_edit8" onchange="display_button3()" value="${data1["employees"][index].department}"></h6></td></tr>
     </tbody>
     </table>
   </div>
-  <hr style="width:100%">
+  <hr style="width:100%;margin:8px">
   <div class="buttons">
     <button class="btn" id="button3"  onclick="save_emp_popup(${index})" disabled>SAVE DETAILS</button>
   </div>
@@ -502,17 +580,21 @@ function display_button3()
    document.getElementById('button3').disabled=false;
 }
 
-//this functions make changes to current data
+//this functions make changes to current data1
 function save_emp_popup(index)
 {
-  data["employees"][index].First_Name=document.getElementById('input_edit1').value;
-  data["employees"][index].Last_Name=document.getElementById('input_edit2').value;
-  data["employees"][index].Preferred_Name=document.getElementById('input_edit3').value;
-  data["employees"][index].email=document.getElementById('input_edit4').value;
-  data["employees"][index].skype=document.getElementById('input_edit5').value;
-  data["employees"][index].phone_no=document.getElementById('input_edit6').value;
-  data["employees"][index].job_title=document.getElementById('input_edit7').value;
-  data["employees"][index].department=document.getElementById('input_edit8').value;
+  const employee_data=JSON.parse(sessionStorage.getItem('new_obj'));
+  console.log(employee_data["employees"][index]);
+  employee_data["employees"][index].First_Name=document.getElementById('input_edit1').value;
+  employee_data["employees"][index].Last_Name=document.getElementById('input_edit2').value;
+  employee_data["employees"][index].Preferred_Name=document.getElementById('input_edit3').value;
+  employee_data["employees"][index].email=document.getElementById('input_edit4').value;
+  employee_data["employees"][index].skype=document.getElementById('input_edit5').value;
+  employee_data["employees"][index].phone_no=document.getElementById('input_edit6').value;
+  employee_data["employees"][index].job_title=document.getElementById('input_edit7').value;
+  employee_data["employees"][index].department=document.getElementById('input_edit8').value;
+  sessionStorage.new_obj=JSON.stringify(employee_data);
+  data1=JSON.parse(sessionStorage.getItem('new_obj'));
   close_edit_popup();
   display("");
 }
@@ -521,8 +603,8 @@ function save_emp_popup(index)
 function specific(cat,dep)
 {
   let res="";
-  for (let i = 0; i < data["employees"].length; i++) {
-    if(data["employees"][i][cat]===dep){
+  for (let i = 0; i < data1["employees"].length; i++) {
+    if(data1["employees"][i][cat]===dep){
       res += cards(i);
   }
  }
@@ -534,7 +616,7 @@ function counter(title)
 {
   let count=0;
   let collection=new Map();
-  data["employees"].forEach((el)=>{
+  data1["employees"].forEach((el)=>{
     if(collection.has(el[title]))
     {
       collection.set(el[title],collection.get(el[title])+1);
