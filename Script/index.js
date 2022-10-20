@@ -535,7 +535,6 @@ function profile_display(eid)
     <hr style="width:100%;margin:8px">
     <div class="buttons">
       <button class="btn" id="button1" onclick="edit_emp_popup(${index})">EDIT DETAILS</button>
-      <button class="btn" id="button2" onclick="close_emp_popup()">CLOSE DETAILS</button>
     </div>
 `;
   window.scroll({top: 0, left: 0, behavior: 'smooth' });
